@@ -25,7 +25,7 @@ import { ConfirmOrder } from './components/Cart/ConfirmOrder';
 import { Payment } from './components/Cart/Payment';
 import { Success } from './components/Cart/Success';
 import { useSelector } from 'react-redux';
-import { UpdateProduct } from './components/admin/UpdateProduct';
+import { UpdateProduct } from './components/admin/UpdateProduct';//Actualizar producto
 import OrdersList from './components/admin/OrdersList';
 import { ListOrder } from './components/order/ListOrder';
 import UsersList from './components/admin/UserList';
