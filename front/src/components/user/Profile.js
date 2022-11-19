@@ -1,10 +1,12 @@
-import React, { Fragment} from 'react'
+import React, { Fragment } from 'react'
 import MetaData from '../layout/MetaData'
 import { Link } from 'react-router-dom'
-import {  useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export const Profile = () => {
+
     const { user, loading } = useSelector(state => state.auth)
+
   return (
     <Fragment>
             {loading ? <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i> :  (

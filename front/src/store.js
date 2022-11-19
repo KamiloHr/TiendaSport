@@ -1,40 +1,23 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension'
-import { newProductReducer, productDetailsReducer, productReducer,newReviewReducer,productReducerUd } from './reducer/productReducer';
-import { saleReducer } from './reducer/saleReducer';
-import authReducer, { allUsersReducer, userDetailsReducer, userReducer } from './reducer/userReducer';
-import { cartReducer } from './reducer/cartReducer'
-import{ allOrdersReducer, myOrdersReducer, newOrderReducer, orderDetailsReducer, orderReducer} from './reducer/orderReducer'
+import { productReducer,productDetailsReducer, newProductReducer } from './reducer/productReducer';
+import  autReducer, { forgotPasswordReducer, userReducer }  from './reducer/userReducer';
+import { cartReducer } from './reducer/cartReducer';
 
 const reducer = combineReducers({
     products: productReducer,
-    productDetails: productDetailsReducer,
-    newReview: newReviewReducer,
-    sales:saleReducer,
-    auth : authReducer,
+    productDetails:productDetailsReducer,
+    auth : autReducer,
     user: userReducer,
-    cart : cartReducer,
-    newProduct: newProductReducer,
-    newOrder: newOrderReducer,
-    myOrders: myOrdersReducer,
-    orderDetails: orderDetailsReducer,
-    allOrders: allOrdersReducer,
-    order: orderReducer,
-    allUsers: allUsersReducer ,
-    productUpdate:productReducerUd,
-    userDetails: userDetailsReducer
-
+    forgotPassword: forgotPasswordReducer,
+    cart: cartReducer,
+    newProduct: newProductReducer
 })
 
 let intialState = {
-    cart: {
-        cartItems: localStorage.getItem('cartItems')
-            ? JSON.parse(localStorage.getItem('cartItems'))
-            : [],
-        shippingInfo: localStorage.getItem('shippingInfo')
-            ? JSON.parse(localStorage.getItem('shippingInfo'))
-            : {}
+    cart:{
+        cartItems:localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")):[]
     }
 }
 

@@ -20,7 +20,7 @@ useEffect(() => {
     if(error){
         dispatch(clearErrors)
     }
-},[isAuthenticated,error,dispatch,navigate])
+},[dispatch(clearErrors)])
 
 const submitHandler = (e) => {
     e.preventDefault();

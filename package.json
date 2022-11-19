@@ -1,24 +1,23 @@
 {
-  "name": "tiendasport",
+  "name": "ciclo4udea",
   "version": "1.0.0",
-  "description": "Tienda virtual de productos de deportes",
-  "main": "server-js",
+  "description": "Tienda virtual de productos para mascotas",
+  "main": "server.js",
   "scripts": {
     "start": "node back/server.js",
     "dev": "set NODE_ENV=DEVELOPMENT& nodemon back/server",
-    "prod": "set NODE_ENV=PRODUCTION& nodemon back/server",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && NODE_OPTIONS=--openssl-legacy-provider && npm install --force --prefix front && npm run build --prefix front"
+    "prod": "set NODE_ENV=PRODUCTION& nodemon back/server"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DesarrollaTECH/tiendaSport.git"
+    "url": "git+https://github.com/KamiloHr/ciclo4Udea.git"
   },
-  "author": "DesarrollaTECH",
+  "author": "KamiloHr",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DesarrollaTECH/tiendaSport/issues"
+    "url": "https://github.com/KamiloHr/ciclo4Udea/issues"
   },
-  "homepage": "https://github.com/DesarrollaTECH/tiendaSport#readme",
+  "homepage": "https://github.com/KamiloHr/ciclo4Udea#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
@@ -29,8 +28,11 @@
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.4",
+    "node-fecht": "^0.0.1-security",
+    "node-fecth": "^0.0.1-security",
     "node-fetch": "^3.2.10",
     "nodemailer": "^6.8.0",
+    "rc-slider": "^10.0.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {

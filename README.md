@@ -1,2 +1,1 @@
-# tiendaSport
-Proyecto de una tienda virtual de artículos deportivos 
+# ciclo4Udea

@@ -1,22 +1,21 @@
 const mongoose = require("mongoose")
- 
-const productosSchema = mongoose.Schema({
+
+const prductosSchema = mongoose.Schema({
     nombre:{
         type:String,
-        required:[true,"Por favor resitra el nombre del producto."],
-        trim:true,
-        maxlength:[120,"El nombre del producto no debe exceder los 120 caracteres."]
+        required:[ true,"Por favor registra el nombre del producto."],
+        trim: true,
+        maxLength:[120,"El nombre del producto no debe exceder los 120 caracteres."]
     },
     precio :{
         type:Number,
         required:[true,"Por favor registre el precio del producto."],
-        maxlength:[8,"El precio del producto no puede estar por encima de 99'999.999"],
+        maxLength:[8, "El el precio del producto no se puede estar por encima de 99'999.999"],
         default:0.0
     },
     descripcion:{
         type:String,
-        required:[true,"Por favor registre un descripcion para el producto"]
-
+        required:[true,"Por favor registre una descripcion para el producto"]
     },
     calificacion:{
         type:Number,
@@ -39,11 +38,12 @@ const productosSchema = mongoose.Schema({
         required:[true,"Por favor seleccione la categoria del producto."],
         enum:{
             values:[
-                "Camisetas Sports",
-                "Busos Sports",
-                "Bolsos Sports",
-                "Zapatos Sports",
-                "Acessorios Sports"
+                "Alimento seco",
+                "Alimento humedo",
+                "Cuidado e Higiene",
+                "Medicamentos",
+                "Snacks",
+                "Juguetes"
             ]
         }
     },
@@ -53,8 +53,8 @@ const productosSchema = mongoose.Schema({
     },
     inventario:{
         type:Number,
-        required:[true,"Por favor rgistre el stock del producto"],
-        maxlength:[5,"Cantidad maxima del producto no se puede sobrepasar 99999"],
+        required:[true,"Por favor registre el stock del producto"],
+        maxLength:[5,"Cantidad maxima del producto no se puede sobrepasar 99999"],
         default:0
     },
     numCalificaciones:{
@@ -75,12 +75,21 @@ const productosSchema = mongoose.Schema({
                 type:String,
                 required:true,
                 fechaComentario:Date.now
+                
             }
         }
     ],
+    user:{
+        type:mongoose.Schema.ObjectId,
+        ref:'User',//authController linea 1
+        required:true
+    },
+
     fechaCreacion:{
         type:Date,
         default:Date.now
     }
+
 })
-module.exports = mongoose.model("productos",productosSchema)
+
+module.exports = mongoose.model("productos",prductosSchema)

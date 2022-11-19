@@ -1,42 +1,29 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import { Carousel } from 'react-bootstrap'
-import MetaData from '../layout/MetaData'
-import { useParams} from "react-router-dom"
-
+import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductDetails, newReview, clearErrors } from '../../actions/productActions'
+import MetaData from "../layout/MetaData"
+import { useParams } from 'react-router-dom'
+import { getProductDetails, clearErrors } from '../../actions/productActions'
+import { useAlert } from 'react-alert'
+import { Carousel } from 'react-bootstrap'
 import { addItemToCart } from '../../actions/cartActions'
-import { NEW_REVIEW_RESET } from '../../constants/productConstants'
-import ListReviews from '../order/ListReviews'
+
 
 export const ProductDetails = () => {
-    const params= useParams();
-    const [quantity, setQuantity] = useState(1)
-    const [rating, setRating] = useState(0);
-    const [comentario, setComentario] = useState('');
+  const { loading, product, error } = useSelector(state => state.productDetails)
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const [quantity, setQuantity] = useState(1)
 
-    const dispatch = useDispatch();
 
-    const { loading, error, product } = useSelector(state => state.productDetails)
-    const { user } = useSelector(state => state.auth)
-    const { error: reviewError, success } = useSelector(state => state.newReview)
+  useEffect(() => {
+    dispatch(getProductDetails(id))
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors())
+    }
 
-    useEffect(() => {
-        dispatch(getProductDetails(params.id))
-
-        if (error) {
-            dispatch(clearErrors())
-        }
-
-        if (reviewError) {
-            dispatch(clearErrors())
-        }
-
-        if (success) {
-            dispatch({ type: NEW_REVIEW_RESET })
-        }
-
-    }, [dispatch, error, reviewError, params.id, success])
+  }, [dispatch, alert, error, id])
 
   const increaseQty = () => {
     const contador = document.querySelector('.count')
@@ -55,58 +42,10 @@ export const ProductDetails = () => {
     const qty = contador.valueAsNumber - 1;
     setQuantity(qty)
   }
-
   const addToCart = () => {
-    dispatch(addItemToCart(params.id, quantity));
+    dispatch(addItemToCart(id, quantity));
+    alert.success('Producto agregado al carro')
   }
-
-  function setUserRatings() {
-    const stars = document.querySelectorAll('.star');
-
-    stars.forEach((star, index) => {
-      star.starValue = index + 1;
-
-      ['click', 'mouseover', 'mouseout'].forEach(function (e) {
-        star.addEventListener(e, showRatings);
-      })
-    })
-
-    function showRatings(e) {
-      stars.forEach((star, index) => {
-        if (e.type === 'click') {
-          if (index < this.starValue) {
-            star.classList.add('orange');
-
-            setRating(this.starValue)
-          } else {
-            star.classList.remove('orange')
-          }
-        }
-
-        if (e.type === 'mouseover') {
-          if (index < this.starValue) {
-            star.classList.add('yellow');
-          } else {
-            star.classList.remove('yellow')
-          }
-        }
-
-        if (e.type === 'mouseout') {
-          star.classList.remove('yellow')
-        }
-      })
-    }
-  }
-  const reviewHandler = () => {
-    const formData = new FormData();
-
-    formData.set('rating', rating);
-    formData.set('comentario', comentario);
-    formData.set('idProducto', params.id);
-
-    dispatch(newReview(formData));
-  }
-
 
   return (
     <Fragment>
@@ -140,7 +79,7 @@ export const ProductDetails = () => {
                 <input type="number" className="form-control count d-inline" value={quantity} readOnly />
                 <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
               </div>
-              <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={product.inventario === 0} onClick={addToCart}>Agregar al Carrito</button>
+              <button type="button" id="carrito_btn" className="btn btn-primary d-inline ml-4" disabled={product.inventario === 0} onClick={addToCart}>Agregar al Carrito</button>
               <hr />
               <p>Estado: <span id="stock_stado" className={product.inventario > 0 ? 'greenColor' : 'redColor'}>{product.inventario > 0 ? "En existencia" : "Agotado"}</span></p>
               <hr />
@@ -148,13 +87,9 @@ export const ProductDetails = () => {
               <p>{product.descripcion}</p>
               <hr />
               <p id="vendedor">Vendido por: <strong>{product.vendedor}</strong></p>
-
-              {user ?
-                <button id="btn_review" type="button" className="btn btn-primary mt-4"
-                  data-toggle="modal" data-target="#ratingModal" onClick={setUserRatings}>Deja tu Opinion</button>
-                :
-                <div className="alert alert-danger mt-5" type="alert">Inicia Sesión para dejar tu review</div>
-              }
+              <button id="btn_review" type="button" className="btn btn-primary mt-4"
+                data-toggle="modal" data-target="#ratingModal">Deja tu Opinion</button>
+              <div className="alert alert-danger mt-5" type="alert">Inicia Sesión para dejar tu review</div>
 
               {/*Mensaje emergente para dejar opinion y calificacion*/}
               <div className="row mt-2 mb-5">
@@ -178,15 +113,10 @@ export const ProductDetails = () => {
                             <li className="star"><i className="fa fa-star"></i></li>
                           </ul>
 
-                          <textarea name="review" 
-                          id="review" 
-                          className="form-control mt3"
-                          value={comentario}
-                          onChange={(e) => setComentario(e.target.value)}
-                          ></textarea>
+                          <textarea name="review" id="review" className="form-control mt3"></textarea>
 
                           <button className="btn my-3 float-right review-btn px-4 text-white"
-                            onClick={reviewHandler} data-dismiss="modal" aria-label="Close">Enviar</button>
+                            data-dismiss="modal" aria-label="Close">Enviar</button>
 
                         </div>
                       </div>
@@ -197,12 +127,10 @@ export const ProductDetails = () => {
               </div>
             </div>
           </div>
-          {product.opiniones && product.opiniones.length > 0 && (
-                        <ListReviews opiniones={product.opiniones} />
-                    )}
         </Fragment>
       )}
     </Fragment>
 
   )
 }
+export default ProductDetails;

@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
+import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { clearErrors, newProduct } from '../../actions/productActions'
@@ -19,27 +20,31 @@ const NewProduct = () => {
     const [imagenPreview, setImagenPreview] = useState([])
 
     const categorias = [
-        "Camisetas Sports",
-        "Busos Sports",
-        "Bolsos Sports",
-        "Zapatos Sports",
-        "Acessorios Sports"
+        "Alimento seco",
+        "Alimento humedo",
+        "Accesorios",
+        "Cuidado e Higiene",
+        "Medicamentos",
+        "Snacks",
+        "Juguetes"
     ]
 
     const navigate = useNavigate()
+    const alert = useAlert();
     const dispatch = useDispatch();
 
     useEffect(() => {
 
         if (error) {
+            alert.error(error);
             dispatch(clearErrors)
-            console.log(error)
         }
         if (success) {
-            navigate("/productList")
+            navigate("/Dashboard")
+            alert.success("Producto registrado con exito")
             dispatch({ type: NEW_PRODUCT_RESET })
         }
-    }, [dispatch, error, success, navigate])
+    }, [dispatch, alert, error, success])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -76,7 +81,7 @@ const NewProduct = () => {
             }
             reader.readAsDataURL(file)
         })
-
+        
     }
     return (
         <Fragment>
