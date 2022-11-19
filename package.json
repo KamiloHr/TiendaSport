@@ -7,18 +7,18 @@
     "start": "node back/server.js",
     "dev": "set NODE_ENV=DEVELOPMENT& nodemon back/server",
     "prod": "set NODE_ENV=PRODUCTION& nodemon back/server",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false && NODE_OPTIONS=--openssl-legacy-provider && npm install --force --prefix front && npm run build --prefix front"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && NODE_OPTIONS=--openssl-legacy-provider && npm install --force --prefix front && npm run build --prefix front"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DesarrollaTECH/tiendaSport.git"
+    "url": "https://github.com/KamiloHr/TiendaSport"
   },
   "author": "DesarrollaTECH",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DesarrollaTECH/tiendaSport/issues"
+    "url": "https://github.com/KamiloHr/TiendaSport/issues"
   },
-  "homepage": "https://github.com/DesarrollaTECH/tiendaSport#readme",
+  "homepage": "https://github.com/KamiloHr/TiendaSport/issues#readme",
   "dependencies": {
     "axios": "^1.1.3",
     "bcryptjs": "^2.4.3",
