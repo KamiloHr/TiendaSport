@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "Tienda virtual de productos de deportes",
   "main": "server-js",
-  "engines": {
-    "node": "16.17.1",
-    "npm" :"9.1.2"
-  },
   "scripts": {
     "start": "node back/server.js",
     "dev": "set NODE_ENV=DEVELOPMENT& nodemon back/server",
